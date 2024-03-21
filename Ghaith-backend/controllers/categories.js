@@ -2,8 +2,12 @@
 const { Category } = require('../models')
 
 const findAllCategories = async (req, res) => {
-  const categories = await Category.find({})
-  res.send(categories)
+  try {
+    const categories = await Category.find({}).populate('cases')
+    res.send(categories)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 const findCategory = async (req, res) => {
