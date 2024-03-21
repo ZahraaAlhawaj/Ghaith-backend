@@ -19,5 +19,6 @@ const Request = mongoose.model('Request', requestSchema)
 module.exports = {
   User,
   Case,
-  Category
+  Category,
+  Charity
 }
