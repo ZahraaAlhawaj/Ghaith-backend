@@ -8,9 +8,9 @@ router.get('/', usersController.findAllUsers)
 //find user
 router.get('/:id', usersController.findUser)
 //create user (in register)
-router.post('/:id', usersController.createUser)
+router.post('/', usersController.createUser)
 //update user (edit profile)
-router.post('/:id', usersController.updateUser)
+router.put('/:id', usersController.updateUser)
 
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {

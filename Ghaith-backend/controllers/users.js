@@ -1,5 +1,5 @@
 //user controller
-const User = require('../models/User')
+const { User } = require('../models')
 
 const findAllUsers = async (req, res) => {
   const users = await User.find({})
@@ -13,8 +13,8 @@ const findUser = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const user = await User.create(req.body)
-    res.send('Student cerated')
+    await User.create(req.body)
+    res.send('user cerated')
   } catch (error) {
     console.log(error)
     res.status(500).send({ errorMsg: error.message })
