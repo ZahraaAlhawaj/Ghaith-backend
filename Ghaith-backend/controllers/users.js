@@ -24,6 +24,7 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, req.body)
+    res.send('user updated')
   } catch (error) {
     console.log(error)
     res.status(500).send({ errorMsg: error.message })

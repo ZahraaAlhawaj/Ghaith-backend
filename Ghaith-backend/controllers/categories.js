@@ -24,6 +24,7 @@ const createCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
   try {
     const category = await Category.findByIdAndUpdate(req.params.id, req.body)
+    res.send('category updated')
   } catch (error) {
     console.log(error)
     res.status(500).send({ errorMsg: error.message })

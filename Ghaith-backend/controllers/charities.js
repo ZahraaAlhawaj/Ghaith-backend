@@ -31,6 +31,7 @@ const findCharity = async (req, res) => {
 const updateCharity = async (req, res) => {
   try {
     const charity = await Charity.findByIdAndUpdate(req.params.id, req.body)
+    res.send('charity updated')
   } catch (error) {
     console.log(error)
     res.status(500).send({ errorMsg: error.message })
