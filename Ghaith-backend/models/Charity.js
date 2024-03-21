@@ -6,8 +6,15 @@ const charitySchema = new Schema(
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     googlemaplink: String,
     location: {
-      type: Point,
-      coordinates: [longitude, latitdue]
+      type: {
+        type: String,
+        enum: ['Point'],
+        required: true
+      },
+      coordinates: {
+        type: [Number],
+        required: true
+      }
     },
     cr_number: String,
     donations: [{ type: Schema.Types.ObjectId, ref: 'Donation' }]
