@@ -5,13 +5,13 @@ const { Schema } = require('mongoose')
 const userSchema = new Schema(
   {
     name: String,
-    email: string,
+    email: String,
     phone_number: String,
-    password: String,
+    passwordDigest: String,
     role: String,
     longitude: String,
     latitdue: String,
-    birth_date: integer
+    birth_date: Number
   },
   {
     timestamps: true
