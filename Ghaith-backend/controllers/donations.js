@@ -1,4 +1,4 @@
-const { Donation, Case, Charity } = require('../models')
+const { Donation, Case, Charity, Category } = require('../models')
 
 const addCaseDonation = async (req, res) => {
   try {
@@ -25,7 +25,32 @@ const addDonation = async (req, res) => {
     console.log(error)
   }
 }
+
+const statistics = async (req, res) => {
+  try {
+    const numberOfDonations = await Donation.countDocuments()
+    const numberOfCharities = await Charity.countDocuments()
+    const numberOfCategories = await Category.countDocuments()
+    const totalAmountDonations = Donation.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: '$amount' }
+        }
+      }
+    ])
+    res.send({
+      numberOfDonations,
+      totalAmountDonations,
+      numberOfCharities,
+      numberOfCategories
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   addCaseDonation,
-  addDonation
+  addDonation,
+  statistics
 }

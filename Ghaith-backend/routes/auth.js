@@ -10,6 +10,6 @@ router.get(
   '/session',
   middleware.stripToken,
   middleware.verifyToken,
-  controller.CheckSession
+  authCtrl.CheckSession
 )
 module.exports = router
