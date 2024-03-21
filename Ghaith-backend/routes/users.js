@@ -12,7 +12,7 @@ router.get(
   '/',
   middleware.stripToken,
   middleware.verifyToken,
-  userCtrl.getUserInfo
+  usersController.getUserInfo
 )
 
 //find user
