@@ -1,9 +1,25 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const usersController = require('../controllers/users')
+const middleware = require('../middleware')
 
-module.exports = router;
+//find all users
+// router.get('/', usersController.findAllUsers)
+
+//get user info
+router.get(
+  '/',
+  middleware.stripToken,
+  middleware.verifyToken,
+  userCtrl.getUserInfo
+)
+
+//find user
+router.get('/:id', usersController.findUser)
+//create user (in register)
+router.post('/', usersController.createUser)
+//update user (edit profile)
+router.put('/:id', usersController.updateUser)
+
+module.exports = router
