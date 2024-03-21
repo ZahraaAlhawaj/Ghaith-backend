@@ -24,6 +24,16 @@ const showChairties = (req, res) => {
   }
 }
 
+const createPickupRequest = (req, res) => {
+  try {
+    const newPickup = Pickup.create(req.body)
+    res.send(newPickup)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
-  showChairties
+  showChairties,
+  createPickupRequest
 }
