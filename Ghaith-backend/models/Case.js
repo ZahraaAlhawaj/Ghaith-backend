@@ -13,7 +13,7 @@ const caseSchema = new Schema(
     start_date: Date,
     end_date: Date,
     donations: [{ type: Schema.Types.ObjectId, ref: 'Donation' }],
-    Status: String
+    Status: String //In Progress , Completed , Cancelled
   },
   {
     timestamps: true

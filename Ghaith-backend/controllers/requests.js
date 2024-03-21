@@ -1,8 +1,8 @@
-const { Request } = require('../models')
+const { Request, Case } = require('../models')
 
 const findAllRequest = async (req, res) => {
   try {
-    const requests = await Request.find({ selected: false })
+    const requests = await Request.find({ status: 'Not Selected' })
     res.send(requests)
   } catch (error) {
     console.log(error)
@@ -34,9 +34,21 @@ const deleteRequest = async (req, res) => {
     console.log(error)
   }
 }
+
+const selectRequest = async (req, res) => {
+  try {
+    const selectedRequest = await Request.findById(req.params.requestId)
+    selectedRequest.status = 'Selected'
+    await selectedRequest.save()
+    const newCase = await Case.create({})
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   createRequest,
   updateRequest,
   deleteRequest,
-  findAllRequest
+  findAllRequest,
+  selectRequest
 }
