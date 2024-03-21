@@ -1,5 +1,13 @@
 const { Request } = require('../models')
 
+const findAllRequest = async (req, res) => {
+  try {
+    const requests = await Request.find({ selected: false })
+    res.send(requests)
+  } catch (error) {
+    console.log(error)
+  }
+}
 const createRequest = async (req, res) => {
   try {
     const newRequest = await Request.create(req.body)
@@ -29,5 +37,6 @@ const deleteRequest = async (req, res) => {
 module.exports = {
   createRequest,
   updateRequest,
-  deleteRequest
+  deleteRequest,
+  findAllRequest
 }

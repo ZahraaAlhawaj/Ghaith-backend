@@ -11,7 +11,8 @@ const requestSchema = new Schema(
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     charity: { type: Schema.Types.ObjectId, ref: 'Charity' },
     document: String,
-    status: String
+    status: String,
+    selected: { type: Boolean, default: false }
   },
   {
     timestamps: true
