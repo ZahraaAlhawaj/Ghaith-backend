@@ -5,6 +5,9 @@ const casesController = require('../controllers/cases')
 
 //find all cases
 router.get('/', casesController.findAllCases)
+
+// finding urgent cases
+router.get('/urgent', casesController.findUrgentCases)
 //find case
 router.get('/:id', casesController.findCase)
 
