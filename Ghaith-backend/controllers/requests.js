@@ -9,6 +9,25 @@ const createRequest = async (req, res) => {
   }
 }
 
+const updateRequest = async (req, res) => {
+  try {
+    const request = Request.findById(req.params.requestId)
+    await request.updateOne(req.body)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const deleteRequest = async (req, res) => {
+  try {
+    await Request.findByIdAndDelete(req.params.requestId)
+    res.send({ message: 'Pickup request deleted successfully' })
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
-  createRequest
+  createRequest,
+  updateRequest,
+  deleteRequest
 }

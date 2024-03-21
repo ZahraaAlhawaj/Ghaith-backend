@@ -1,5 +1,3 @@
-// User model
-
 const { Schema } = require('mongoose')
 
 const requestSchema = new Schema(
