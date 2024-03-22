@@ -20,5 +20,8 @@ module.exports = {
   User,
   Case,
   Category,
-  Charity
+  Charity,
+  Donation,
+  Pickup,
+  Request
 }
