@@ -6,8 +6,11 @@ router.get('/', pickupCtrl.showChairties)
 
 router.post('/', pickupCtrl.createPickupRequest)
 
-router.put('/:pickupId', pickupController.updatePickupRequest)
+router.put('/:pickupId', pickupCtrl.updatePickupRequest)
+router.put('/:pickupId/status', pickupCtrl.updatePickupStatus)
 
-router.delete('/:pickupId', pickupController.deletePickupRequest)
+router.delete('/:pickupId', pickupCtrl.deletePickupRequest)
+
+router.get('/charity', pickupCtrl.getPickupsByCharity)
 
 module.exports = router

@@ -48,9 +48,22 @@ const deletePickupRequest = async (req, res) => {
     console.log(error)
   }
 }
+
+const getPickupsByCharity = async (req, res) => {
+  try {
+    const userId = res.locals.payload.id
+    const pickups = await Pickup.find({ 'charity.user': userId }).populate(
+      'charity'
+    )
+    res.send(pickups)
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   showChairties,
   createPickupRequest,
   updatePickupRequest,
-  deletePickupRequest
+  deletePickupRequest,
+  getPickupsByCharity
 }
