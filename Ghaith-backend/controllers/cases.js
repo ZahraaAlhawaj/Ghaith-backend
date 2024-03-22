@@ -8,7 +8,22 @@ const findAllCases = async (req, res) => {
 
 const findCase = async (req, res) => {
   const cases = await Case.findById(req.params.id)
+    .populate('charity')
+    .populate('category')
+    .populate('donations')
   res.send(cases)
+}
+
+const findCharityCases = async (req, res) => {
+  const cases = await Case.find({})
+  let allCases = []
+  for (let i = 0; i < cases.length; i++) {
+    if (cases[i].charity == req.params.id) {
+      allCases.push(cases[i])
+    }
+  }
+  res.send(allCases)
+  //const charityId = cases.charity._id
 }
 
 const findUrgentCases = async (req, res) => {
@@ -67,5 +82,6 @@ module.exports = {
   createCase,
   updateCase,
   deleteCase,
-  findUrgentCases
+  findUrgentCases,
+  findCharityCases
 }

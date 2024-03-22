@@ -4,6 +4,7 @@ const charitySchema = new Schema(
   {
     name: String,
     user: { type: Schema.Types.ObjectId, ref: 'User' },
+    logo: String,
     googlemaplink: String,
     location: {
       type: {
