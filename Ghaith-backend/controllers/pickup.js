@@ -48,9 +48,35 @@ const deletePickupRequest = async (req, res) => {
     console.log(error)
   }
 }
+
+const getPickupsByCharity = async (req, res) => {
+  try {
+    const userId = res.locals.payload.id
+    const pickups = await Pickup.find({ 'charity.user': userId }).populate(
+      'charity'
+    )
+    res.send(pickups)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const updatePickupStatus = async (req, res) => {
+  try {
+    const pickupId = req.params.pickupId
+    const newStatus = req.body.status
+    const updatedPickup = await Pickup.findById(pickupId)
+    await updatedPickup.updateOne({ status: newStatus })
+    res.send(updatedPickup)
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   showChairties,
   createPickupRequest,
   updatePickupRequest,
-  deletePickupRequest
+  deletePickupRequest,
+  getPickupsByCharity,
+  updatePickupStatus
 }

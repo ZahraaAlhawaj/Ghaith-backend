@@ -13,7 +13,9 @@ const charitiesRouter = require('./routes/charities')
 const categoriesRouter = require('./routes/categories')
 const casesRouter = require('./routes/cases')
 const authRouter = require('./routes/auth')
-
+const donationsRouter = require('./routes/donations')
+const pickupRouter = require('./routes/pickup')
+const requestRouter = require('./routes/requests')
 var app = express()
 
 // view engine setup
@@ -33,7 +35,9 @@ app.use('/users', usersRouter)
 app.use('/charities', charitiesRouter)
 app.use('/categories', categoriesRouter)
 app.use('/cases', casesRouter)
-
+app.use('/donations', donationsRouter)
+app.use('/pickup', pickupRouter)
+app.use('/request', requestRouter)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404))
