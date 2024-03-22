@@ -60,10 +60,23 @@ const getPickupsByCharity = async (req, res) => {
     console.log(error)
   }
 }
+
+const updatePickupStatus = async (req, res) => {
+  try {
+    const pickupId = req.params.pickupId
+    const newStatus = req.body.status
+    const updatedPickup = await Pickup.findById(pickupId)
+    await updatedPickup.updateOne({ status: newStatus })
+    res.send(updatedPickup)
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   showChairties,
   createPickupRequest,
   updatePickupRequest,
   deletePickupRequest,
-  getPickupsByCharity
+  getPickupsByCharity,
+  updatePickupStatus
 }
