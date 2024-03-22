@@ -3,11 +3,6 @@ const { Charity } = require('../models')
 
 const findAllCharities = async (req, res) => {
   const charities = await Charity.find({})
-  if (charities) {
-    console.log('hi')
-  } else {
-    console.log('not found')
-  }
   res.send(charities)
 }
 
