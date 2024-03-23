@@ -4,12 +4,14 @@ const charitySchema = new Schema(
   {
     name: String,
     user: { type: Schema.Types.ObjectId, ref: 'User' },
+    logo: String,
     googlemaplink: String,
     location: {
       type: {
         type: String,
         enum: ['Point'],
-        required: true
+        required: true,
+        default: 'Point' // Set the default value to 'Point'
       },
       coordinates: {
         type: [Number],
@@ -23,5 +25,8 @@ const charitySchema = new Schema(
     timestamps: true
   }
 )
+
+// Add the geospatial index
+charitySchema.index({ location: '2dsphere' })
 
 module.exports = charitySchema
