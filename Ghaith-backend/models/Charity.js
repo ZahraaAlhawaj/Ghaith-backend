@@ -10,7 +10,8 @@ const charitySchema = new Schema(
       type: {
         type: String,
         enum: ['Point'],
-        required: true
+        required: true,
+        default: 'Point' // Set the default value to 'Point'
       },
       coordinates: {
         type: [Number],
@@ -24,5 +25,8 @@ const charitySchema = new Schema(
     timestamps: true
   }
 )
+
+// Add the geospatial index
+charitySchema.index({ location: '2dsphere' })
 
 module.exports = charitySchema
