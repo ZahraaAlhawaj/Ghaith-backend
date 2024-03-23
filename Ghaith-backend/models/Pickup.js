@@ -6,7 +6,7 @@ const pickupSchema = new Schema(
     time: String,
     type: String,
     quantity: Number,
-    urgent: Boolean,
+    urgent: { type: Boolean, default: false },
     status: String,
     charity: { type: Schema.Types.ObjectId, ref: 'Charity' },
     user: { type: Schema.Types.ObjectId, ref: 'User' },

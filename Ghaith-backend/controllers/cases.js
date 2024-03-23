@@ -2,28 +2,33 @@
 const { Case } = require('../models')
 
 const findAllCases = async (req, res) => {
-  const cases = await Case.find({})
-  res.send(cases)
+  try {
+    const cases = await Case.find({})
+    res.send(cases)
+  } catch (error) {
+    res.status(500).send({ errorMsg: error.message })
+  }
 }
 
 const findCase = async (req, res) => {
-  const cases = await Case.findById(req.params.id)
-    .populate('charity')
-    .populate('category')
-    .populate('donations')
-  res.send(cases)
+  try {
+    const cases = await Case.findById(req.params.id)
+      .populate('charity')
+      .populate('category')
+      .populate('donations')
+    res.send(cases)
+  } catch (error) {
+    res.status(500).send({ errorMsg: error.message })
+  }
 }
 
 const findCharityCases = async (req, res) => {
-  const cases = await Case.find({})
-  let allCases = []
-  for (let i = 0; i < cases.length; i++) {
-    if (cases[i].charity == req.params.id) {
-      allCases.push(cases[i])
-    }
+  try {
+    const cases = await Case.find({ charity: req.params.id })
+    res.send(cases)
+  } catch (error) {
+    res.status(500).send({ errorMsg: error.message })
   }
-  res.send(allCases)
-  //const charityId = cases.charity._id
 }
 
 const findUrgentCases = async (req, res) => {
@@ -43,13 +48,16 @@ const findUrgentCases = async (req, res) => {
     res.send(urgentCases)
   } catch (error) {
     console.log(error)
+    res.status(500).send({ errorMsg: error.message })
   }
 }
 
 const createCase = async (req, res) => {
   try {
-    await Case.create(req.body)
-    res.send('case cerated')
+    const newCase = await Case.create(req.body)
+    res.send({
+      case: newCase
+    })
   } catch (error) {
     console.log(error)
     res.status(500).send({ errorMsg: error.message })
@@ -58,7 +66,9 @@ const createCase = async (req, res) => {
 
 const updateCase = async (req, res) => {
   try {
-    const cases = await Case.findByIdAndUpdate(req.params.id, req.body)
+    const cases = await Case.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    })
     res.send(cases)
   } catch (error) {
     console.log(error)
@@ -69,7 +79,7 @@ const updateCase = async (req, res) => {
 const deleteCase = async (req, res) => {
   try {
     await Case.findByIdAndDelete(req.params.id)
-    res.send('Case Deleted')
+    res.send('Case Deleted Successfully')
   } catch (error) {
     console.log(error)
     res.status(500).send({ errorMsg: error.message })
