@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const pickupCtrl = require('../controllers/pickup')
 
-router.post('/charites', pickupCtrl.showChairties)
+router.get('/charites', pickupCtrl.showChairties)
 
 router.post('/', pickupCtrl.createPickupRequest)
 
