@@ -8,7 +8,11 @@ const userSchema = new Schema(
     email: String,
     phone_number: String,
     passwordDigest: String,
-    role: String,
+    role: {
+      type: String,
+      enum: ['Super Admin', 'Admin', 'User'],
+      default: 'User'
+    },
     longitude: String,
     latitdue: String,
     birth_date: Number
