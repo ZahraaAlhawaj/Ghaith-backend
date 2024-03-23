@@ -6,7 +6,7 @@ const addCaseDonation = async (req, res) => {
     const donatedCase = await Case.findById(req.params.caseId)
     donatedCase.collected_amount += newDonation.amount
     await donatedCase.save()
-    donatedCase.donations.push(newDonation_.id)
+    donatedCase.donations.push(newDonation._id)
     await donatedCase.save()
     res.send(newDonation)
   } catch (error) {
