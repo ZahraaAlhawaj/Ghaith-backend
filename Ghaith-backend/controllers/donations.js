@@ -17,8 +17,8 @@ const addCaseDonation = async (req, res) => {
 const addDonation = async (req, res) => {
   try {
     const newDonation = await Donation.create(req.body)
-    const charity = await Charity.findById(req.params.chairtyId)
-    charity.donations.push(newDonation_.id)
+    const charity = await Charity.findById(req.params.charityId)
+    charity.donations.push(newDonation._id)
     await charity.save()
     res.send(newDonation)
   } catch (error) {
