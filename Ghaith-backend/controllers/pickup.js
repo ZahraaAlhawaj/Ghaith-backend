@@ -1,16 +1,16 @@
-const { Pickup, User } = require('../models')
+const { Pickup, User, Charity } = require('../models')
 
 const showChairties = async (req, res) => {
   try {
-    const userLatitude = req.body
-    const userLongitude = req.body
+    const latitude = req.body.latitude
+    const longitude = req.body.longitude
 
-    const charities = await Restaurant.find({
+    const charities = await Charity.find({
       location: {
         $near: {
           $geometry: {
             type: 'Point',
-            coordinates: [userLongitude, userLatitude]
+            coordinates: [longitude, latitude]
           },
           $maxDistance: 5000
         }
