@@ -12,7 +12,11 @@ const requestSchema = new Schema(
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     charity: { type: Schema.Types.ObjectId, ref: 'Charity' },
     document: String,
-    status: { type: String, default: 'Not Selected' } //Not Selected , Selected , Approved , Rejected
+    status: {
+      type: String,
+      enum: ['Not Selected', 'Selected', 'Approved', 'Rejected'],
+      default: 'Not Selected'
+    }
   },
   {
     timestamps: true
