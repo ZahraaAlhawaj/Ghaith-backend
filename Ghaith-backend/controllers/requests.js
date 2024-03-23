@@ -21,6 +21,7 @@ const updateRequest = async (req, res) => {
   try {
     const request = Request.findById(req.params.requestId)
     await request.updateOne(req.body)
+    return request
   } catch (error) {
     console.log(error)
   }

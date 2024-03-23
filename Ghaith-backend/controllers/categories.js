@@ -6,19 +6,23 @@ const findAllCategories = async (req, res) => {
     const categories = await Category.find({}).populate('cases')
     res.send(categories)
   } catch (error) {
-    console.log(error)
+    res.status(500).send({ errorMsg: error.message })
   }
 }
 
 const findCategory = async (req, res) => {
-  const category = await Category.findById(req.params.id)
-  res.send(category)
+  try {
+    const category = await Category.findById(req.params.id)
+    res.send(category)
+  } catch (error) {
+    res.status(500).send({ errorMsg: error.message })
+  }
 }
 
 const createCategory = async (req, res) => {
   try {
-    await Category.create(req.body)
-    res.send('category cerated')
+    const category = await Category.create(req.body)
+    res.send(category)
   } catch (error) {
     console.log(error)
     res.status(500).send({ errorMsg: error.message })
@@ -27,8 +31,10 @@ const createCategory = async (req, res) => {
 
 const updateCategory = async (req, res) => {
   try {
-    const category = await Category.findByIdAndUpdate(req.params.id, req.body)
-    res.send('category updated')
+    const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    })
+    res.send(category)
   } catch (error) {
     console.log(error)
     res.status(500).send({ errorMsg: error.message })
@@ -38,7 +44,7 @@ const updateCategory = async (req, res) => {
 const deleteCategory = async (req, res) => {
   try {
     await Category.findByIdAndDelete(req.params.id)
-    res.send('Category Deleted')
+    res.status(200).send('Category Deleted Successfully')
   } catch (error) {
     console.log(error)
     res.status(500).send({ errorMsg: error.message })

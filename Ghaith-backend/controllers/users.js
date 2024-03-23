@@ -25,8 +25,8 @@ const findUser = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    await User.create(req.body)
-    res.send('user cerated')
+    const user = await User.create(req.body)
+    res.send(user)
   } catch (error) {
     console.log(error)
     res.status(500).send({ errorMsg: error.message })
@@ -36,7 +36,7 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, req.body)
-    res.send('user updated')
+    res.send(user)
   } catch (error) {
     console.log(error)
     res.status(500).send({ errorMsg: error.message })

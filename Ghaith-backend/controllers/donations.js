@@ -1,26 +1,26 @@
 const { Donation, Case, Charity, Category } = require('../models')
 
-const addCaseDonation = async (req, res) => {
-  try {
-    const newDonation = await Donation.create(req.body)
-    const donatedCase = await Case.findById(req.params.caseId)
-    donatedCase.collected_amount += newDonation.amount
-    await donatedCase.save()
-    donatedCase.donations.push(newDonation._id)
-    await donatedCase.save()
-    res.send(newDonation)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 const addDonation = async (req, res) => {
   try {
-    const newDonation = await Donation.create(req.body)
-    const charity = await Charity.findById(req.params.charityId)
-    charity.donations.push(newDonation._id)
-    await charity.save()
-    res.send(newDonation)
+    const donation = await Donation.create({
+      amount: req.body.amount,
+      user: req.body.user
+    })
+
+    if (req.body.case) {
+      const donatedCase = await Case.findById(req.body.case)
+      donatedCase.donations.push(donation)
+      donatedCase.collected_amount += donation.amount
+      await donatedCase.save()
+    }
+
+    if (req.body.charity) {
+      const charity = await Charity.findById(req.body.charity)
+      charity.donations.push(donation)
+      await charity.save()
+    }
+
+    res.send(donation)
   } catch (error) {
     console.log(error)
   }
@@ -50,7 +50,6 @@ const statistics = async (req, res) => {
   }
 }
 module.exports = {
-  addCaseDonation,
   addDonation,
   statistics
 }
