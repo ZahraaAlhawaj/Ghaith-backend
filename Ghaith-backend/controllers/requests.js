@@ -1,4 +1,4 @@
-const { Request, Case } = require('../models')
+const { Request, Case, Charity } = require('../models')
 
 const findAllRequest = async (req, res) => {
   try {
@@ -37,10 +37,19 @@ const deleteRequest = async (req, res) => {
 
 const selectRequest = async (req, res) => {
   try {
+    const userId = res.locals.payload.id
+    const charity = await Charity.find({ user: userId })
     const selectedRequest = await Request.findById(req.params.requestId)
     selectedRequest.status = 'Selected'
     await selectedRequest.save()
-    const newCase = await Case.create({})
+    const newCase = await Case.create({
+      name: selectedRequest.title,
+      description: selectedRequest.description,
+      total_amount: selectedRequest.expected_amount,
+      start_date: new Date(),
+      end_date: expected_date,
+      charity: charity._id
+    })
   } catch (error) {
     console.log(error)
   }
