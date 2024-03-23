@@ -4,6 +4,6 @@ const donationCrtl = require('../controllers/donations')
 
 router.get('/statistics', donationCrtl.statistics)
 router.post('/case/:caseId', donationCrtl.addCaseDonation)
-router.post('/chairty/:chairtyId', donationCrtl.addDonation)
+router.post('/charity/:charityId', donationCrtl.addDonation)
 
 module.exports = router
