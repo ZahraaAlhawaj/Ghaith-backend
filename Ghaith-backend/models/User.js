@@ -15,7 +15,7 @@ const userSchema = new Schema(
     },
     longitude: String,
     latitdue: String,
-    birth_date: Number
+    birth_date: Date
   },
   {
     timestamps: true
