@@ -1,6 +1,18 @@
 const { User, Charity } = require('../models')
 const middleware = require('../middleware')
 
+const getCoordinates = (link) => {
+  const regex = /@(-?\d+\.\d+),(-?\d+\.\d+)/
+  const match = link.match(regex)
+  if (match) {
+    const latitude = parseFloat(match[1])
+    const longitude = parseFloat(match[2])
+    return { latitude, longitude }
+  } else {
+    return null
+  }
+}
+
 const Register = async (req, res) => {
   try {
     const { email, password } = req.body.user
@@ -27,6 +39,14 @@ const Register = async (req, res) => {
       const user = await User.create(req.body.user)
       if (req.body.charity) {
         req.body.charity.user = user._id
+
+        // get charity location
+        const coordinates = getCoordinates(req.body.charity.googlemaplink)
+        if (coordinates) {
+          req.body.charity.latitude = latitude
+          req.body.charity.longitude = longitude
+        }
+
         charity = await Charity.create(req.body.charity)
       }
       res.send({ user, charity })
@@ -62,10 +82,17 @@ const Login = async (req, res) => {
     res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
   }
 }
+
 const CheckSession = async (req, res) => {
   const { payload } = res.locals
   res.send(payload)
 }
+
+// // Example usage
+// const link = 'https://www.google.com/maps/@40.7128,-74.0060'
+// const coordinates = getCoordinatesFromGoogleMapsLink(link)
+// console.log(coordinates)
+
 module.exports = {
   Register,
   Login,
