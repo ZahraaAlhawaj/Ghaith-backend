@@ -54,40 +54,26 @@ const findUrgentCases = async (req, res) => {
 
 const findStatistics = async (req, res) => {
   const cases = await Case.findById(req.params.id)
-  let numberOfDonations
   let lastDonation
-  let numberOfDays
+  //find number of donation
+  const numberOfDonations = cases.donations.length
+  console.log('number: ', numberOfDonations)
 
+  //find number of days until end day
   const formatDate = (dateString) => {
     const date = new Date(dateString)
-
     const year = date.getFullYear()
     const month = String(date.getMonth() + 1).padStart(2, '0')
     const day = String(date.getDate()).padStart(2, '0')
-
     const formattedDate = `${year}-${month}-${day}`
     return new Date(formattedDate)
   }
-
-  // const date = new Date(cases.end_date)
-  // const year = date.getFullYear()
-  // const month = String(date.getMonth() + 1).padStart(2, '0')
-  // const day = String(date.getDate()).padStart(2, '0')
-
-  // const formatedEndDate = `${year}-${month}-${day}`
-
-  // const startDate = new Date(cases.start_date)
-  // const startyear = startDate.getFullYear()
-  // const startmonth = String(startDate.getMonth() + 1).padStart(2, '0')
-  // const startday = String(startDate.getDate()).padStart(2, '0')
-
-  // const formatedStartDate = `${startyear}-${startmonth}-${startday}`
-
   const startDateOfDate = formatDate(cases.start_date)
   const endDateOfDate = formatDate(cases.end_date)
 
   const dayDifference =
     (endDateOfDate.getTime() - startDateOfDate.getTime()) / (1000 * 3600 * 24)
+
   console.log(dayDifference)
 
   try {
