@@ -1,5 +1,5 @@
 //user controller
-const { Case } = require('../models')
+const { Case, Donation } = require('../models')
 
 const findAllCases = async (req, res) => {
   try {
@@ -52,6 +52,68 @@ const findUrgentCases = async (req, res) => {
   }
 }
 
+const findStatistics = async (req, res) => {
+  try {
+    const cases = await Case.findById(req.params.id).populate('donations')
+    //find number of donation
+    const numberOfDonations = cases.donations.length
+    // console.log('number: ', numberOfDonations)
+
+    //find number of days until end day
+    const formatDate = (dateString) => {
+      const date = new Date(dateString)
+      const year = date.getFullYear()
+      const month = String(date.getMonth() + 1).padStart(2, '0')
+      const day = String(date.getDate()).padStart(2, '0')
+      const formattedDate = `${year}-${month}-${day}`
+      return new Date(formattedDate)
+    }
+    const startDateOfDate = formatDate(cases.start_date)
+    const endDateOfDate = formatDate(cases.end_date)
+
+    const dayDifference =
+      (endDateOfDate.getTime() - startDateOfDate.getTime()) / (1000 * 3600 * 24)
+
+    // console.log(dayDifference)
+
+    //get last donation
+    const casesLast = await Case.findById(req.params.id).populate({
+      path: 'donations',
+      options: { sort: { updatedAt: -1 }, limit: 1 }
+    })
+
+    const mostRecentDonation = casesLast.donations[0]
+    const lastUpdateTime = mostRecentDonation.updatedAt
+    const timeElapsed = Date.now() - lastUpdateTime.getTime()
+
+    let timeElapsedText
+    if (timeElapsed < 6000) {
+      const seconds = Math.floor(timeElapsed / 1000)
+      timeElapsedText = `${seconds} sec`
+    } else if (timeElapsed < 3600000) {
+      const minutes = Math.floor(timeElapsed / 60000)
+      timeElapsedText = `${minutes} min`
+    } else if (timeElapsed < 86400000) {
+      const hours = Math.floor(timeElapsed / 3600000)
+      timeElapsedText = `${hours} hour`
+    } else {
+      const dayS = Math.floor(timeElapsed / 86400000)
+      timeElapsedText = `${dayS} days`
+    }
+
+    // console.log('time', timeElapsedText)
+
+    res.send({
+      timeElapsedText,
+      dayDifference,
+      numberOfDonations
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({ errorMsg: error.message })
+  }
+}
+
 const createCase = async (req, res) => {
   try {
     const newCase = await Case.create(req.body)
@@ -93,5 +155,6 @@ module.exports = {
   updateCase,
   deleteCase,
   findUrgentCases,
-  findCharityCases
+  findCharityCases,
+  findStatistics
 }
