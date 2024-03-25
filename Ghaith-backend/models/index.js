@@ -7,6 +7,7 @@ const categorySchema = require('./Category')
 const donationSchema = require('./Donation')
 const pickupSchema = require('./Pickup')
 const requestSchema = require('./Request')
+const eventSchema = require('./Event')
 
 const User = mongoose.model('User', userSchema)
 const Case = mongoose.model('Case', caseSchema)
@@ -15,6 +16,7 @@ const Category = mongoose.model('Category', categorySchema)
 const Donation = mongoose.model('Donation', donationSchema)
 const Pickup = mongoose.model('Pickup', pickupSchema)
 const Request = mongoose.model('Request', requestSchema)
+const Event = mongoose.model('Event', eventSchema)
 
 module.exports = {
   User,
@@ -23,5 +25,6 @@ module.exports = {
   Charity,
   Donation,
   Pickup,
-  Request
+  Request,
+  Event
 }
