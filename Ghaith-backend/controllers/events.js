@@ -51,7 +51,7 @@ const deleteEvent = async (req, res) => {
 const joinEvent = async (req, res) => {
   try {
     const event = await Event.findById(req.params.eventId)
-    event.remainingParticipants--
+    event.remainigVolunteers++
     await event.save()
 
     res.send(event)
