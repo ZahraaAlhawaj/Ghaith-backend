@@ -3,6 +3,9 @@ const router = express.Router()
 const requestCtrl = require('../controllers/requests')
 
 router.get('/', requestCtrl.findAllRequest)
+
+router.get('/charityrequest', requestCtrl.findCharityRequest)
+
 router.post('/', requestCtrl.createRequest)
 
 router.put('/:requestId', requestCtrl.updateRequest)

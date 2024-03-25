@@ -2,12 +2,23 @@ const { Request, Case, Charity } = require('../models')
 
 const findAllRequest = async (req, res) => {
   try {
-    const requests = await Request.find({ status: 'Not Selected' })
+    const requests = await Request.find({})
     res.send(requests)
   } catch (error) {
     console.log(error)
   }
 }
+
+const findCharityRequest = async (req, res) => {
+  try {
+    const charityId = res.locals.payload.charity.id
+    const requests = await Request.find({ charity: charityId })
+    res.send(requests)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const createRequest = async (req, res) => {
   try {
     const newRequest = await Request.create(req.body)
@@ -19,9 +30,10 @@ const createRequest = async (req, res) => {
 
 const updateRequest = async (req, res) => {
   try {
-    const request = Request.findById(req.params.requestId)
-    await request.updateOne(req.body)
-    return request
+    const request = await Request.findById(req.params.requestId)
+    const updatedReques = await request.updateOne(req.body)
+    res.send(request)
+    //return request
   } catch (error) {
     console.log(error)
   }
@@ -60,5 +72,6 @@ module.exports = {
   updateRequest,
   deleteRequest,
   findAllRequest,
-  selectRequest
+  selectRequest,
+  findCharityRequest
 }

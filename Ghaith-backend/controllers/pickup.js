@@ -5,17 +5,21 @@ const showChairties = async (req, res) => {
     const latitude = req.body.latitude
     const longitude = req.body.longitude
 
-    const charities = await Charity.find({
-      location: {
-        $near: {
-          $geometry: {
-            type: 'Point',
-            coordinates: [longitude, latitude]
-          },
-          $maxDistance: 5000
+
+    const charities = await Charity.aggregate([
+      {
+        $geoNear: {
+          near: { type: 'Point', coordinates: [longitude, latitude] },
+          distanceField: 'distance',
+          maxDistance: 5000,
+          spherical: true
         }
+      },
+      {
+        $limit: 5
       }
-    })
+    ])
+
     res.send(charities)
   } catch (error) {
     console.log(error)
@@ -24,6 +28,7 @@ const showChairties = async (req, res) => {
 
 const createPickupRequest = async (req, res) => {
   try {
+    req.body.user = res.locals.payload.id
     const newPickup = await Pickup.create(req.body)
     res.send(newPickup)
   } catch (error) {

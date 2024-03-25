@@ -4,6 +4,7 @@ const { Case, Donation } = require('../models')
 const findAllCases = async (req, res) => {
   try {
     const cases = await Case.find({})
+
     res.send(cases)
   } catch (error) {
     res.status(500).send({ errorMsg: error.message })
