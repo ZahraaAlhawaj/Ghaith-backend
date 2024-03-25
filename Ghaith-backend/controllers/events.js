@@ -54,14 +54,20 @@ const joinEvent = async (req, res) => {
     const user = await User.findById(userId)
     const event = await Event.findById(req.params.eventId)
     if (event.volunteers.includes(userId)) {
-      return res.send({ msg: 'User is already joined.' })
+      return res.send({
+        success: false,
+        msg: 'You have already joined this event.'
+      })
     }
-    if (event.requiredVolunteers === event.volunteers.length ) {
-      return res.send({ msg: 'Event is full.' })
+    if (event.requiredVolunteers === event.volunteers.length) {
+      return res.send({
+        success: false,
+        msg: 'This event has reached its maximum capacity.'
+      })
     }
 
     event.volunteers.push(user._id)
-    await event.save()
+    await event.save({ success: true, event })
 
     res.send(event)
   } catch (error) {
