@@ -1,10 +1,16 @@
 const express = require('express')
 const router = express.Router()
 const pickupCtrl = require('../controllers/pickup')
+const middleware = require('../middleware')
 
 router.post('/charites', pickupCtrl.showChairties)
 
-router.post('/', pickupCtrl.createPickupRequest)
+router.post(
+  '/',
+  middleware.stripToken,
+  middleware.verifyToken,
+  pickupCtrl.createPickupRequest
+)
 
 router.put('/:pickupId', pickupCtrl.updatePickupRequest)
 router.put('/:pickupId/status', pickupCtrl.updatePickupStatus)
