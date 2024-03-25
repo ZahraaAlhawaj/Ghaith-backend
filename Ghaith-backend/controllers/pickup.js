@@ -5,6 +5,7 @@ const showChairties = async (req, res) => {
     const latitude = req.body.latitude
     const longitude = req.body.longitude
 
+
     const charities = await Charity.aggregate([
       {
         $geoNear: {

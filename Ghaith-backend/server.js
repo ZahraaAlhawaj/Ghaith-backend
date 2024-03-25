@@ -16,6 +16,7 @@ const authRouter = require('./routes/auth')
 const donationsRouter = require('./routes/donations')
 const pickupRouter = require('./routes/pickup')
 const requestRouter = require('./routes/requests')
+const eventsRouter = require('./routes/events')
 var app = express()
 
 // view engine setup
@@ -38,6 +39,7 @@ app.use('/cases', casesRouter)
 app.use('/donations', donationsRouter)
 app.use('/pickup', pickupRouter)
 app.use('/request', requestRouter)
+app.use('/events', eventsRouter)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404))
