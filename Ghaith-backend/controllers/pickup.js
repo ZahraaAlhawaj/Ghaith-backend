@@ -27,6 +27,7 @@ const showChairties = async (req, res) => {
 
 const createPickupRequest = async (req, res) => {
   try {
+    req.body.user = res.locals.payload.id
     const newPickup = await Pickup.create(req.body)
     res.send(newPickup)
   } catch (error) {
