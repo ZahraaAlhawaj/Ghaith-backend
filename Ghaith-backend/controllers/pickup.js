@@ -2,21 +2,23 @@ const { Pickup, User, Charity } = require('../models')
 
 const showChairties = async (req, res) => {
   try {
-    // const latitude = req.body.latitude
-    // const longitude = req.body.longitude
+    const latitude = req.body.latitude
+    const longitude = req.body.longitude
 
-    // const charities = await Charity.find({
-    //   location: {
-    //     $near: {
-    //       $geometry: {
-    //         type: 'Point',
-    //         coordinates: [longitude, latitude]
-    //       },
-    //       $maxDistance: 5000
-    //     }
-    //   }
-    // })
-    const charities = await Charity.find({})
+    const charities = await Charity.aggregate([
+      {
+        $geoNear: {
+          near: { type: 'Point', coordinates: [longitude, latitude] },
+          distanceField: 'distance',
+          maxDistance: 5000,
+          spherical: true
+        }
+      },
+      {
+        $limit: 5
+      }
+    ])
+
     res.send(charities)
   } catch (error) {
     console.log(error)
