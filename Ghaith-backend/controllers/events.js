@@ -1,4 +1,4 @@
-const { Event } = require('../models')
+const { Event, User } = require('../models')
 
 const getAllEvents = async (req, res) => {
   try {
@@ -50,8 +50,17 @@ const deleteEvent = async (req, res) => {
 }
 const joinEvent = async (req, res) => {
   try {
+    const userId = res.locals.payload.id
+    const user = await User.findById(userId)
     const event = await Event.findById(req.params.eventId)
-    event.remainigVolunteers++
+    if (event.volunteers.includes(userId)) {
+      return res.send({ msg: 'User is already joined.' })
+    }
+    if (event.requiredVolunteers === event.volunteers.length ) {
+      return res.send({ msg: 'Event is full.' })
+    }
+
+    event.volunteers.push(user._id)
     await event.save()
 
     res.send(event)

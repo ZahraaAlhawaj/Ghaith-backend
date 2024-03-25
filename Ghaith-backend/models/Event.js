@@ -9,7 +9,6 @@ const eventSchema = new Schema(
     time: String,
     image: String,
     requiredVolunteers: { type: Number, required: true },
-    remainigVolunteers: { type: Number, default: 0 },
     volunteers: [{ type: Schema.Types.ObjectId, ref: 'User' }]
   },
   {
