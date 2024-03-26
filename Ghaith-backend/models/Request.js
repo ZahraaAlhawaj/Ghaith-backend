@@ -16,7 +16,8 @@ const requestSchema = new Schema(
       type: String,
       enum: ['Not Selected', 'Selected'],
       default: 'Not Selected'
-    }
+    },
+    case_code: String
   },
   {
     timestamps: true
