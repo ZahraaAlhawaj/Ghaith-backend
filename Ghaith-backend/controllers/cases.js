@@ -1,5 +1,5 @@
 //user controller
-const { Case, Donation } = require('../models')
+const { Case, Donation, charity } = require('../models')
 
 const findAllCases = async (req, res) => {
   try {
@@ -118,6 +118,8 @@ const findStatistics = async (req, res) => {
 
 const createCase = async (req, res) => {
   try {
+    const userId = res.locals.payload.id
+    const charity = await Charity.findOne({ user: userId })
     const newCase = await Case.create(req.body)
     res.send({
       case: newCase
