@@ -63,6 +63,15 @@ const findUrgentCases = async (req, res) => {
         $limit: 10
       }
     ])
+
+//     const urgentCases = await Case.find({
+//       start_date: { $lte: currentDate },
+//       end_date: { $gte: currentDate, $lte: twoDaysFromNow },
+//       total_amount: { $gt: 0, $gte: 1000 },
+//       collected_amount: { $lt: '$total_amount' * 0.5 }
+//     })
+//       .sort({ total_amount: -1 })
+//       .limit(10)
     res.send(urgentCases)
   } catch (error) {
     console.log(error)

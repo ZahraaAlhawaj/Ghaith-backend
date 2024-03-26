@@ -4,7 +4,7 @@ const pickupCtrl = require('../controllers/pickup')
 const middleware = require('../middleware')
 
 router.post('/charites', pickupCtrl.showChairties)
-
+router.get('/', pickupCtrl.showAllPickup)
 router.post(
   '/',
   middleware.stripToken,
@@ -13,10 +13,19 @@ router.post(
 )
 
 router.put('/:pickupId', pickupCtrl.updatePickupRequest)
-router.put('/:pickupId/status', pickupCtrl.updatePickupStatus)
+router.put(
+  '/:pickupId/status',
+
+  pickupCtrl.updatePickupStatus
+)
 
 router.delete('/:pickupId', pickupCtrl.deletePickupRequest)
 
-router.get('/charity', pickupCtrl.getPickupsByCharity)
+router.get(
+  '/charity',
+  middleware.stripToken,
+  middleware.verifyToken,
+  pickupCtrl.getPickupsByCharity
+)
 
 module.exports = router
