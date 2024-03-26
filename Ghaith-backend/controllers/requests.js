@@ -55,6 +55,7 @@ const selectRequest = async (req, res) => {
     const selectedRequest = await Request.findById(req.params.requestId)
     selectedRequest.status = 'Selected'
     await selectedRequest.save()
+    
     const newCase = await Case.create({
       name: selectedRequest.title,
       description: selectedRequest.description,
