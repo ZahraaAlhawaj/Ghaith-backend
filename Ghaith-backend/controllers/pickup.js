@@ -5,7 +5,6 @@ const showChairties = async (req, res) => {
     const latitude = req.body.latitude
     const longitude = req.body.longitude
 
-
     const charities = await Charity.aggregate([
       {
         $geoNear: {
@@ -70,7 +69,7 @@ const updatePickupStatus = async (req, res) => {
   try {
     const pickupId = req.params.pickupId
     const newStatus = req.body.status
-    const updatedPickup = await Pickup.findById(pickupId)
+    const updatedPickup = await Pickup.findById(pickupId).populate('user')
     await updatedPickup.updateOne({ status: newStatus })
     res.send(updatedPickup)
   } catch (error) {

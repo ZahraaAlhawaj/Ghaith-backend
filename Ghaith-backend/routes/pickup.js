@@ -13,10 +13,19 @@ router.post(
 )
 
 router.put('/:pickupId', pickupCtrl.updatePickupRequest)
-router.put('/:pickupId/status', pickupCtrl.updatePickupStatus)
+router.put(
+  '/:pickupId/status',
+
+  pickupCtrl.updatePickupStatus
+)
 
 router.delete('/:pickupId', pickupCtrl.deletePickupRequest)
 
-router.get('/charity', pickupCtrl.getPickupsByCharity)
+router.get(
+  '/charity',
+  middleware.stripToken,
+  middleware.verifyToken,
+  pickupCtrl.getPickupsByCharity
+)
 
 module.exports = router
