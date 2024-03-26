@@ -48,21 +48,33 @@ const deleteRequest = async (req, res) => {
   }
 }
 
+const generateCode = () => {
+  const charset =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  let code = ''
+  for (let i = 0; i < 4; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length)
+    code += charset[randomIndex]
+  }
+  return code
+}
+
 const selectRequest = async (req, res) => {
   try {
-    const userId = res.locals.payload.id
-    const charity = await Charity.find({ user: userId })
+    req.body.code = generateCode()
+    const newCase = await Case.create(req.body)
+
     const selectedRequest = await Request.findById(req.params.requestId)
-    selectedRequest.status = 'Selected'
-    await selectedRequest.save()
-    
-    const newCase = await Case.create({
-      name: selectedRequest.title,
-      description: selectedRequest.description,
-      total_amount: selectedRequest.expected_amount,
-      start_date: new Date(),
-      end_date: expected_date,
-      charity: charity._id
+    if (newCase) {
+      selectedRequest.charity = req.body.charityId
+      selectedRequest.status = 'Selected'
+      selectedRequest.case_code = newCase.code
+      await selectedRequest.save()
+    }
+
+    res.send({
+      request: selectedRequest,
+      case: newCase
     })
   } catch (error) {
     console.log(error)
