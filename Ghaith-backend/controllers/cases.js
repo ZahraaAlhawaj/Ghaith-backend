@@ -3,7 +3,7 @@ const { Case, Donation, Charity } = require('../models')
 
 const findAllCases = async (req, res) => {
   try {
-    const cases = await Case.find({})
+    const cases = await Case.find({}).populate('category')
 
     res.send(cases)
   } catch (error) {
@@ -40,14 +40,29 @@ const findUrgentCases = async (req, res) => {
     const twoDaysFromNow = new Date()
     twoDaysFromNow.setDate(currentDate.getDate() + 2)
 
-    const urgentCases = await Case.find({
-      start_date: { $lte: currentDate },
-      end_date: { $gte: currentDate, $lte: twoDaysFromNow },
-      total_amount: { $gt: 0, $gte: 1000 },
-      collected_amount: { $lt: total_amount * 0.5 }
-    })
-      .sort({ total_amount: -1 })
-      .limit(10)
+    const urgentCases = await Case.aggregate([
+      {
+        $match: {
+          total_amount: { $gt: 0, $gte: 1000 }
+        }
+      },
+      {
+        $addFields: {
+          required_collected_amount: { $multiply: ['$total_amount', 0.5] }
+        }
+      },
+      {
+        $match: {
+          collected_amount: { $lt: '$required_collected_amount' }
+        }
+      },
+      {
+        $sort: { total_amount: -1 }
+      },
+      {
+        $limit: 10
+      }
+    ])
     res.send(urgentCases)
   } catch (error) {
     console.log(error)
