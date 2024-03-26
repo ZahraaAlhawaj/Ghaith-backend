@@ -5,7 +5,12 @@ const eventCtrl = require('../controllers/events')
 const middleware = require('../middleware')
 
 router.get('/', eventCtrl.getAllEvents)
-router.get('/charity', eventCtrl.getAllEvents)
+router.get(
+  '/charity',
+  middleware.stripToken,
+  middleware.verifyToken,
+  eventCtrl.getEventByCharity
+)
 router.get('/:eventId', eventCtrl.getOneEvent)
 router.post('/', eventCtrl.createEvent)
 router.put('/:eventId', eventCtrl.updateEvent)

@@ -75,11 +75,21 @@ const joinEvent = async (req, res) => {
   }
 }
 
+const getEventByCharity = async (req, res) => {
+  try {
+    const userId = res.locals.payload.id
+    const events = await Event.find({ 'charity.user': userId })
+    res.send(events)
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   getAllEvents,
   getOneEvent,
   createEvent,
   updateEvent,
   deleteEvent,
-  joinEvent
+  joinEvent,
+  getEventByCharity
 }
