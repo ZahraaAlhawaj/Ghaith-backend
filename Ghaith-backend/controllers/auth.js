@@ -41,10 +41,14 @@ const Register = async (req, res) => {
         req.body.charity.user = user._id
 
         // get charity location
-        const coordinates = getCoordinates(req.body.charity.googlemaplink)
-        if (coordinates) {
-          req.body.charity.latitude = latitude
-          req.body.charity.longitude = longitude
+        const mapCoords = getCoordinates(req.body.charity.googlemaplink)
+        if (mapCoords) {
+          const location = {
+            type: 'Point',
+            coordinates: [mapCoords['longitude'], mapCoords['latitude']]
+          }
+
+          req.body.charity.location = location
         }
 
         charity = await Charity.create(req.body.charity)
@@ -73,6 +77,7 @@ const Login = async (req, res) => {
         email: user.email
       }
       let token = middleware.createToken(payload)
+
       return res.send({ user: payload, token })
     }
 
