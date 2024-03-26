@@ -19,7 +19,12 @@ const charitySchema = new Schema(
       }
     },
     cr_number: String,
-    donations: [{ type: Schema.Types.ObjectId, ref: 'Donation' }]
+    donations: [{ type: Schema.Types.ObjectId, ref: 'Donation' }],
+    status: {
+      type: String,
+      enum: ['Pending', 'Approved', 'Rejected', 'Inactive'],
+      default: 'Pending'
+    }
   },
   {
     timestamps: true

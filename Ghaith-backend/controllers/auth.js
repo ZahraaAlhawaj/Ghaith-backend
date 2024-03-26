@@ -76,7 +76,8 @@ const Login = async (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
-        role: user.role
+        role: user.role,
+        onboarding: user.onboarding
       }
       let token = middleware.createToken(payload)
 
@@ -107,6 +108,32 @@ const CheckSession = async (req, res) => {
   res.send(payload)
 }
 
+const ResetPassword = async (req, res) => {
+  try {
+    let passwordDigest = await middleware.hashPassword(req.body.password)
+    const user = await User.findByIdAndUpdate(
+      res.locals.payload.id,
+      { passwordDigest: passwordDigest, onboarding: true },
+      {
+        new: true
+      }
+    )
+
+    let payload = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      onboarding: user.onboarding
+    }
+
+    res.send(payload)
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({ errorMsg: error.message })
+  }
+}
+
 // // Example usage
 // const link = 'https://www.google.com/maps/@40.7128,-74.0060'
 // const coordinates = getCoordinatesFromGoogleMapsLink(link)
@@ -115,5 +142,6 @@ const CheckSession = async (req, res) => {
 module.exports = {
   Register,
   Login,
-  CheckSession
+  CheckSession,
+  ResetPassword
 }
