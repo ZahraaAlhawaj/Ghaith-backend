@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const casesController = require('../controllers/cases')
+const middleware = require('../middleware')
 
 //find all cases
 router.get('/', casesController.findAllCases)
@@ -14,7 +15,8 @@ router.get('/:id/statistics', casesController.findStatistics)
 //find case
 router.get('/:id', casesController.findCase)
 //create case
-router.post('/', casesController.createCase)
+router.post('/',  middleware.stripToken,
+middleware.verifyToken, casesController.createCase)
 //update Case
 router.put('/:id', casesController.updateCase)
 //delete case

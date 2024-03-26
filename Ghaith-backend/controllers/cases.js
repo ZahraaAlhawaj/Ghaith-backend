@@ -1,5 +1,5 @@
 //user controller
-const { Case, Donation } = require('../models')
+const { Case, Donation, Charity } = require('../models')
 
 const findAllCases = async (req, res) => {
   try {
@@ -26,6 +26,8 @@ const findCase = async (req, res) => {
 const findCharityCases = async (req, res) => {
   try {
     const cases = await Case.find({ charity: req.params.id })
+
+    // console.log('cases', cases)
     res.send(cases)
   } catch (error) {
     res.status(500).send({ errorMsg: error.message })
@@ -118,7 +120,9 @@ const findStatistics = async (req, res) => {
 
 const createCase = async (req, res) => {
   try {
-    const newCase = await Case.create(req.body)
+    const userId = res.locals.payload.id
+    const charity = await Charity.findOne({ user: userId })
+    const newCase = await Case.create({ ...req.body, charity: charity._id })
     res.send({
       case: newCase
     })

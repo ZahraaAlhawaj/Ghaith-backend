@@ -42,6 +42,7 @@ const Register = async (req, res) => {
 
         // get charity location
         const mapCoords = getCoordinates(req.body.charity.googlemaplink)
+        console.log(mapCoords)
         if (mapCoords) {
           const location = {
             type: 'Point',
@@ -70,7 +71,7 @@ const Login = async (req, res) => {
       password
     )
 
-    if (matched) {
+    if (matched && user.role == 'User') {
       let payload = {
         id: user.id,
         name: user.name,
@@ -81,12 +82,24 @@ const Login = async (req, res) => {
       let token = middleware.createToken(payload)
 
       return res.send({ user: payload, token })
+    } else if (matched && user.role == 'Admin') {
+      const charity = await Charity.findOne({ user: user._id })
+      let payload = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        charityId: charity._id
+      }
+      let token = middleware.createToken(payload)
+
+      return res.send({ user: payload, token })
     }
 
-    res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
+    res.status(401).send({ status: 'Error', msg: 'Invalid email or password' })
   } catch (error) {
     console.log(error)
-    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
+    res.status(401).send({ status: 'Error', msg: 'Invalid email or password' })
   }
 }
 
