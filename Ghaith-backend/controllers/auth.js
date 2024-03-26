@@ -42,6 +42,7 @@ const Register = async (req, res) => {
 
         // get charity location
         const mapCoords = getCoordinates(req.body.charity.googlemaplink)
+        console.log(mapCoords)
         if (mapCoords) {
           const location = {
             type: 'Point',
