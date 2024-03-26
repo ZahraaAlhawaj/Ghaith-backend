@@ -14,6 +14,7 @@ router.get(
   middleware.verifyToken,
   usersController.getUserInfo
 )
+router.get('/all', usersController.findAllUsers)
 
 //find user
 router.get('/:id', usersController.findUser)
