@@ -15,7 +15,8 @@ const userSchema = new Schema(
     },
     longitude: String,
     latitdue: String,
-    birth_date: Date
+    birth_date: Date,
+    onboarding: { type: Boolean, default: false }
   },
   {
     timestamps: true
