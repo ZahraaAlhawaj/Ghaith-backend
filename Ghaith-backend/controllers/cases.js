@@ -69,13 +69,14 @@ const findStatistics = async (req, res) => {
       const formattedDate = `${year}-${month}-${day}`
       return new Date(formattedDate)
     }
-    const startDateOfDate = formatDate(cases.start_date)
+    //const startDateOfDate = formatDate(cases.start_date)
     const endDateOfDate = formatDate(cases.end_date)
 
-    const dayDifference =
-      (endDateOfDate.getTime() - startDateOfDate.getTime()) / (1000 * 3600 * 24)
+    const currentDate = new Date()
+    const differenceDays = endDateOfDate.getTime() - currentDate
+    const dayDifference = Math.ceil(differenceDays / (1000 * 60 * 60 * 24))
 
-    // console.log(dayDifference)
+    //const dayDifference = (endDateOfDate.getTime() - startDateOfDate.getTime()) / (1000 * 3600 * 24)
 
     //get last donation
     const casesLast = await Case.findById(req.params.id).populate({
