@@ -1,5 +1,14 @@
 const { Donation, Case, Charity, Category } = require('../models')
 
+const findAllDonations = async (req, res) => {
+  try {
+    const donations = await Donation.find({}).populate('user')
+    res.send(donations)
+  } catch (error) {
+    res.status(500).send({ errorMsg: error.message })
+  }
+}
+
 const addDonation = async (req, res) => {
   try {
     const donation = await Donation.create({
@@ -51,5 +60,6 @@ const statistics = async (req, res) => {
 }
 module.exports = {
   addDonation,
-  statistics
+  statistics,
+  findAllDonations
 }
