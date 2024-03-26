@@ -76,10 +76,10 @@ const Login = async (req, res) => {
       return res.send({ user: payload, token })
     }
 
-    res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
+    res.status(401).send({ status: 'Error', msg: 'Invalid email or password' })
   } catch (error) {
     console.log(error)
-    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
+    res.status(401).send({ status: 'Error', msg: 'Invalid email or password' })
   }
 }
 
