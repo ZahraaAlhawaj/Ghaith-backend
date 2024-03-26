@@ -12,4 +12,12 @@ router.get(
   middleware.verifyToken,
   authCtrl.CheckSession
 )
+
+router.put(
+  '/reset',
+  middleware.stripToken,
+  middleware.verifyToken,
+  authCtrl.ResetPassword
+)
+
 module.exports = router

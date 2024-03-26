@@ -1,9 +1,10 @@
 //user controller
-const { Charity } = require('../models')
+const { Charity, User } = require('../models')
+const middleware = require('../middleware')
 
 const findAllCharities = async (req, res) => {
   try {
-    const charities = await Charity.find({})
+    const charities = await Charity.find({}).populate('user')
     res.send(charities)
   } catch (error) {
     res.status(500).send({ errorMsg: error.message })
@@ -31,11 +32,35 @@ const createCharity = async (req, res) => {
   }
 }
 
+const generateRandomPassword = (length) => {
+  const charset =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  let password = ''
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length)
+    password += charset[randomIndex]
+  }
+  return password
+}
+
 const updateCharity = async (req, res) => {
   try {
+    const previousCharity = await Charity.findById(req.params.id)
     const charity = await Charity.findByIdAndUpdate(req.params.id, req.body, {
       new: true
     })
+
+    if (previousCharity.status === 'Pending' && charity.status === 'Approved') {
+      // generate random password
+      const password = generateRandomPassword(8)
+      let passwordDigest = await middleware.hashPassword(password)
+
+      const user = await User.findById(charity.user)
+      user.passwordDigest = passwordDigest
+      await user.save()
+
+      // send email
+    }
     res.send(charity)
   } catch (error) {
     console.log(error)
