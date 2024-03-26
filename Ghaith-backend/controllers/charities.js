@@ -1,6 +1,18 @@
 //user controller
 const { Charity, User } = require('../models')
 const middleware = require('../middleware')
+const nodemailer = require('nodemailer')
+
+const transport = nodemailer.createTransport(
+  (mailData = {
+    host: 'sandbox.smtp.mailtrap.io',
+    port: 2525,
+    auth: {
+      user: process.env.mailDataUser,
+      pass: process.env.mailDataPass
+    }
+  })
+)
 
 const findAllCharities = async (req, res) => {
   try {
@@ -58,8 +70,16 @@ const updateCharity = async (req, res) => {
       const user = await User.findById(charity.user)
       user.passwordDigest = passwordDigest
       await user.save()
-
       // send email
+      const message = {
+        from: 'admin@ghaith.com',
+        to: user.email,
+        subject: 'Reset Password',
+        text: `Thank you to register your charity with Ghaith Platform \n Your Password:\n${password} \n Your application has been approved.`
+      }
+      transport.sendMail(message, function (err, info) {
+        onsole.log(info)
+      })
     }
     res.send(charity)
   } catch (error) {
