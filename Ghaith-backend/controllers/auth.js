@@ -88,7 +88,7 @@ const Login = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
-        charrityId:charity._id
+        charityId: charity._id
       }
       let token = middleware.createToken(payload)
 

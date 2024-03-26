@@ -26,6 +26,8 @@ const findCase = async (req, res) => {
 const findCharityCases = async (req, res) => {
   try {
     const cases = await Case.find({ charity: req.params.id })
+
+    // console.log('cases', cases)
     res.send(cases)
   } catch (error) {
     res.status(500).send({ errorMsg: error.message })
