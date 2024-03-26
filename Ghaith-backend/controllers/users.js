@@ -10,8 +10,8 @@ const getUserInfo = async (req, res) => {
   try {
     const userId = res.locals.payload.id
     const user = await User.findById(userId)
-    const pickup = await Pickup.find({ user: userId })
-    const request = await Request.find({ user: userId })
+    const pickup = await Pickup.find({ user: userId }).populate('charity')
+    const request = await Request.find({ user: userId }).populate('charity')
     const donation = await Donation.find({ user: userId })
     res.send({ user, pickup, request, donation })
   } catch (error) {
