@@ -14,7 +14,7 @@ const requestSchema = new Schema(
     document: String,
     status: {
       type: String,
-      enum: ['Not Selected', 'Selected', 'Approved', 'Rejected'],
+      enum: ['Not Selected', 'Selected'],
       default: 'Not Selected'
     }
   },
