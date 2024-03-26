@@ -44,7 +44,7 @@ const findUrgentCases = async (req, res) => {
       start_date: { $lte: currentDate },
       end_date: { $gte: currentDate, $lte: twoDaysFromNow },
       total_amount: { $gt: 0, $gte: 1000 },
-      collected_amount: { $lt: total_amount * 0.5 }
+      collected_amount: { $lt: '$total_amount' * 0.5 }
     })
       .sort({ total_amount: -1 })
       .limit(10)
