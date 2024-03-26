@@ -2,7 +2,7 @@ const { Pickup, User, Charity } = require('../models')
 
 const showAllPickup = async (req, res) => {
   try {
-    const pickups = await Pickup.find({})
+    const pickups = await Pickup.find({ status: 'submitted' })
     res.send(pickups)
   } catch (error) {
     console.log(error)
