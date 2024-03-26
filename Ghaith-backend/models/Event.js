@@ -8,6 +8,7 @@ const eventSchema = new Schema(
     date: Date,
     time: String,
     image: String,
+    charity: { type: Schema.Types.ObjectId, ref: 'Charity' },
     requiredVolunteers: { type: Number, required: true },
     volunteers: [{ type: Schema.Types.ObjectId, ref: 'User' }]
   },
