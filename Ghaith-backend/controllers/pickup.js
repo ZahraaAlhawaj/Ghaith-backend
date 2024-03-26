@@ -1,5 +1,14 @@
 const { Pickup, User, Charity } = require('../models')
 
+const showAllPickup = async (req, res) => {
+  try {
+    const pickups = await Pickup.find({})
+    res.send(pickups)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const showChairties = async (req, res) => {
   try {
     const latitude = req.body.latitude
@@ -77,6 +86,7 @@ const updatePickupStatus = async (req, res) => {
   }
 }
 module.exports = {
+  showAllPickup,
   showChairties,
   createPickupRequest,
   updatePickupRequest,

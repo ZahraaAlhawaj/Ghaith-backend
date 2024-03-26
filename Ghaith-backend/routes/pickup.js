@@ -4,7 +4,7 @@ const pickupCtrl = require('../controllers/pickup')
 const middleware = require('../middleware')
 
 router.post('/charites', pickupCtrl.showChairties)
-
+router.get('/', pickupCtrl.showAllPickup)
 router.post(
   '/',
   middleware.stripToken,
