@@ -81,7 +81,10 @@ const Login = async (req, res) => {
       let token = middleware.createToken(payload)
 
       return res.send({ user: payload, token })
-    } else if (matched && user.role == 'Admin') {
+    } else if (
+      matched &&
+      (user.role === 'Admin' || user.role === 'Super Admin')
+    ) {
       const charity = await Charity.findOne({ user: user._id })
       let payload = {
         id: user.id,
