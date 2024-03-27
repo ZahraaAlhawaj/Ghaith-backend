@@ -81,7 +81,8 @@ const joinEvent = async (req, res) => {
 const getEventByCharity = async (req, res) => {
   try {
     const userId = res.locals.payload.id
-    const events = await Event.find({ 'charity.user': userId })
+    const charity = await Charity.findOne({ user: userId })
+    const events = await Event.find({ charity: charity._id })
     console.log(events, userId)
     res.send(events)
   } catch (error) {
