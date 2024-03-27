@@ -1,4 +1,4 @@
-const { Event, User } = require('../models')
+const { Event, User, Charity } = require('../models')
 
 const getAllEvents = async (req, res) => {
   try {
@@ -20,7 +20,10 @@ const getOneEvent = async (req, res) => {
 
 const createEvent = async (req, res) => {
   try {
-    const event = await Event.create(req.body)
+    const userId = res.locals.payload.id
+    const charity = await Charity.findOne({ user: userId })
+    console.log(charity._id)
+    const event = await Event.create({ ...req.body, charity: charity._id })
     res.send(event)
   } catch (error) {
     console.log(error)
@@ -75,11 +78,35 @@ const joinEvent = async (req, res) => {
   }
 }
 
+const getEventByCharity = async (req, res) => {
+  try {
+    const userId = res.locals.payload.id
+    const charity = await Charity.findOne({ user: userId })
+    const events = await Event.find({ charity: charity._id })
+    console.log(events, userId)
+    res.send(events)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const getEventByUser = async (req, res) => {
+  try {
+    const userId = res.locals.payload.id
+    const events = await Event.find({ volunteers: userId })
+    res.send(events)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   getAllEvents,
   getOneEvent,
   createEvent,
   updateEvent,
   deleteEvent,
-  joinEvent
+  joinEvent,
+  getEventByCharity,
+  getEventByUser
 }

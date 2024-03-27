@@ -78,7 +78,7 @@ const updateCharity = async (req, res) => {
         text: `Thank you to register your charity with Ghaith Platform \n Your Password:\n${password} \n Your application has been approved.`
       }
       transport.sendMail(message, function (err, info) {
-        onsole.log(info)
+        console.log(info)
       })
     }
     res.send(charity)
