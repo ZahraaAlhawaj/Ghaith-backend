@@ -25,9 +25,13 @@ const findAllCharities = async (req, res) => {
 
 const findCharity = async (req, res) => {
   try {
-    const charity = await Charity.findById(req.params.id)
-      .populate('donations')
-      .populate('user')
+    const charity = await Charity.findById(req.params.id).populate({
+      path: 'donations',
+      populate: {
+        path: 'user'
+      }
+    })
+
     res.send(charity)
   } catch (error) {
     res.status(500).send({ errorMsg: error.message })
