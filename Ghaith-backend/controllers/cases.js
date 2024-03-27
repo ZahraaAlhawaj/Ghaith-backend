@@ -144,9 +144,19 @@ const findStatistics = async (req, res) => {
     res.status(500).send({ errorMsg: error.message })
   }
 }
-
+const generateCode = () => {
+  const charset =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  let code = ''
+  for (let i = 0; i < 4; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length)
+    code += charset[randomIndex]
+  }
+  return code
+}
 const createCase = async (req, res) => {
   try {
+    req.body.code = generateCode()
     const userId = res.locals.payload.id
     const charity = await Charity.findOne({ user: userId })
     const newCase = await Case.create({ ...req.body, charity: charity._id })
