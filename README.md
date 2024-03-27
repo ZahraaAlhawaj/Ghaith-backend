@@ -1,10 +1,18 @@
-# Ghaith
+# Ghaith Platform
 
 ## About the Project
 
-Ghaith is a sophisticated and user-friendly charity platform designed to facilitate meaningful connections between donors, charities, and individuals in need. Built with Vue.js for the frontend and Express.js for the backend, Ghaith offers a seamless experience for users to donate to charities, support active cases, and request assistance or donations for themselves.
+"Ghaith" is a comprehensive charity platform designed to connect those in need with generous donors and volunteers. Users can explore a diverse range of charitable organizations, each with its own mission and impact. Through the platform, users can donate directly to charities or contribute to specific cases that resonate with them.
+
+Additionally, "Ghaith" offers a platform for individuals to request assistance, whether it's for basic needs or specific challenges they are facing. Users can also request pickups for donated items, making it convenient to contribute clothing, food, and other essentials to those in need.
+
+For those looking to make a difference beyond monetary donations, "Ghaith" provides information on events organized by charities, allowing users to volunteer their time and support meaningful causes in their communities.
+
+Behind the scenes, the admin dashboard empowers administrators to manage requests, cases, and charities efficiently, ensuring that "Ghaith" operates smoothly and effectively to serve its noble purpose.
 
 ## Live Link
+
+Click the following link to be redirected to the live version of the code. [Ghaith Platform]()
 
 ## Technologies Used
 
@@ -56,44 +64,28 @@ npm start
 
 ## Features
 
-### Charity Section
+- List of Charities: Explore and learn about various charitable organizations and their missions.
+- Cases: View specific cases related to charities and donate to support these causes.
+- Request for Help: Request assistance for your needs, and our community will strive to help.
+- Request Pickup: Schedule a pickup for your donated items, such as clothes and food.
+- Events: Discover events organized by charities and volunteer to make a difference.
 
-#### Comprehensive Charity Profiles
+## Admin Dashboard
 
-Detailed profiles for registered charities, showcasing their mission, impact, and current projects.
-
-#### Donor Engagement
-
-Interactive features to engage donors, including progress tracking and impact updates.
-
-### Cases Section
-
-#### Urgent Cases
-
-Highlighted list of urgent cases requiring immediate attention and support.
-
-#### Transparency and Accountability
-
-Detailed information about each case, including donation progress and impact achieved.
-
-#### Personalized Assistance
-
-Platform for individuals to request specific forms of assistance, such as financial aid or essential items.
-
-#### Donation Requests
-
-Facility for users to request specific donations, such as clothes or food, with convenient pickup scheduling.
-
-### Admin Side
-
-#### Robust Admin Dashboard
-
-Comprehensive dashboard for administrators to manage requests, cases, and charities efficiently.
-
-#### Super Admin Privileges
-
-Additional features for super admins to oversee and manage charity details and user permissions effectively.
+The admin dashboard provides administrators with the tools to manage requests, cases, and charities efficiently, ensuring the platform operates smoothly and effectively.
 
 ## Contact
 
+Tasneem Ali - [LinkedIn](https://www.linkedin.com/in/tasneem-jameel-ali/) | tasneem.jameel9@gmail.com
+
+Zahraa Ali - [LinkedIn]() | zahraaalihasan279@gmail.com
+
+Zahraa Alhawaj - [LinkedIn]() |
+zahraa.mu2019@gmail.com
+
+Esra Ashoor - [LinkedIn]() |
+esra.ashoor.e@gmail.com
+
 ## Acknowledgments
+
+- [vuetifyjs](https://vuetifyjs.com/en/)
