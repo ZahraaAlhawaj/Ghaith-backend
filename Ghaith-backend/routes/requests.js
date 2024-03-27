@@ -1,8 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const requestCtrl = require('../controllers/requests')
+const middleware = require('../middleware')
 
-router.get('/', requestCtrl.findAllRequest)
+router.get(
+  '/',
+  middleware.stripToken,
+  middleware.verifyToken,
+  requestCtrl.findAllRequest
+)
 
 router.get('/charityrequest', requestCtrl.findCharityRequest)
 
