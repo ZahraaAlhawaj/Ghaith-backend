@@ -1,4 +1,3 @@
-//user controller
 const { Case, Donation, Charity } = require('../models')
 
 const findAllCases = async (req, res) => {
@@ -29,7 +28,6 @@ const findCharityCases = async (req, res) => {
       'category'
     )
 
-    // console.log('cases', cases)
     res.send(cases)
   } catch (error) {
     res.status(500).send({ errorMsg: error.message })

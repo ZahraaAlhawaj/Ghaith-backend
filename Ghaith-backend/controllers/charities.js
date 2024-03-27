@@ -1,4 +1,3 @@
-//user controller
 const { Charity, User } = require('../models')
 const middleware = require('../middleware')
 const nodemailer = require('nodemailer')
