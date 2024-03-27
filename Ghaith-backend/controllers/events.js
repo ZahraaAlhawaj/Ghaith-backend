@@ -89,6 +89,17 @@ const getEventByCharity = async (req, res) => {
     console.log(error)
   }
 }
+
+const getEventByUser = async (req, res) => {
+  try {
+    const userId = res.locals.payload.id
+    const events = await Event.find({ volunteers: userId })
+    res.send(events)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   getAllEvents,
   getOneEvent,
@@ -96,5 +107,6 @@ module.exports = {
   updateEvent,
   deleteEvent,
   joinEvent,
-  getEventByCharity
+  getEventByCharity,
+  getEventByUser
 }

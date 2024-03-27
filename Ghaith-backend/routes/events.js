@@ -11,6 +11,12 @@ router.get(
   middleware.verifyToken,
   eventCtrl.getEventByCharity
 )
+router.get(
+  '/user',
+  middleware.stripToken,
+  middleware.verifyToken,
+  eventCtrl.getEventByUser
+)
 router.get('/:eventId', eventCtrl.getOneEvent)
 router.post(
   '/',
