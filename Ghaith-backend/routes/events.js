@@ -12,7 +12,12 @@ router.get(
   eventCtrl.getEventByCharity
 )
 router.get('/:eventId', eventCtrl.getOneEvent)
-router.post('/', eventCtrl.createEvent)
+router.post(
+  '/',
+  middleware.stripToken,
+  middleware.verifyToken,
+  eventCtrl.createEvent
+)
 router.put('/:eventId', eventCtrl.updateEvent)
 router.delete('/:eventId', eventCtrl.deleteEvent)
 router.put(

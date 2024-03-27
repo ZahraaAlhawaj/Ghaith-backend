@@ -1,4 +1,4 @@
-const { Event, User } = require('../models')
+const { Event, User, Charity } = require('../models')
 
 const getAllEvents = async (req, res) => {
   try {
@@ -20,7 +20,11 @@ const getOneEvent = async (req, res) => {
 
 const createEvent = async (req, res) => {
   try {
+    const userId = res.locals.payload.id
+    const charity = await Charity.find({ user: userId })
     const event = await Event.create(req.body)
+    event.charity = charity._id
+    await event.save()
     res.send(event)
   } catch (error) {
     console.log(error)
