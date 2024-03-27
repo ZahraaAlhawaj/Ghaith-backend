@@ -46,7 +46,6 @@ const updateRequest = async (req, res) => {
     const request = await Request.findById(req.params.requestId)
     const updatedReques = await request.updateOne(req.body)
     res.send(request)
-    //return request
   } catch (error) {
     console.log(error)
   }

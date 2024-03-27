@@ -1,4 +1,3 @@
-//user controller
 const { User, Pickup, Request, Donation } = require('../models')
 
 const findAllUsers = async (req, res) => {

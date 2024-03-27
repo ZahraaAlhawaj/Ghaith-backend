@@ -1,4 +1,3 @@
-//user controller
 const { Category } = require('../models')
 
 const findAllCategories = async (req, res) => {
