@@ -40,14 +40,11 @@ const statistics = async (req, res) => {
     const numberOfDonations = await Donation.countDocuments()
     const numberOfCharities = await Charity.countDocuments()
     const numberOfCategories = await Category.countDocuments()
-    const totalAmountDonations = Donation.aggregate([
-      {
-        $group: {
-          _id: null,
-          totalAmount: { $sum: '$amount' }
-        }
-      }
-    ])
+    const allDonations = await Donation.find({})
+    const totalAmountDonations = allDonations.reduce(
+      (acc, donation) => acc + donation.amount,
+      0
+    )
     res.send({
       numberOfDonations,
       totalAmountDonations,
