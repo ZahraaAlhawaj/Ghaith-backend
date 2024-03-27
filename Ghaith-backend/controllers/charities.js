@@ -14,6 +14,15 @@ const transport = nodemailer.createTransport(
   })
 )
 
+const findApprovedCharities = async (req, res) => {
+  try {
+    const charities = await Charity.find({ status: 'Approved' })
+    res.send(charities)
+  } catch (error) {
+    res.status(500).send({ errorMsg: error.message })
+  }
+}
+
 const findAllCharities = async (req, res) => {
   try {
     const charities = await Charity.find({}).populate('user')
@@ -107,5 +116,6 @@ module.exports = {
   findCharity,
   updateCharity,
   deleteCharity,
-  createCharity
+  createCharity,
+  findApprovedCharities
 }
