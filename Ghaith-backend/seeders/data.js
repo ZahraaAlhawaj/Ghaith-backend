@@ -185,11 +185,11 @@ const createData = async () => {
   await Charity.deleteMany({})
   console.log('Creating data . . .')
   for (let i = 0; i < users.length; i++) {
-    const addedUser = await User.insertMany(users[i])
-    const addCharity = await Charity.insertMany({
-      ...charities[i],
-      user: addedUser._id
-    })
+    const addedUser = await User.create(users[i])
+    const addedCharity = await Charity.create(charities[i])
+
+    addedCharity.user = addedUser._id
+    await addedCharity.save()
   }
   console.log('Data created!')
   mongoose.connection.close()
