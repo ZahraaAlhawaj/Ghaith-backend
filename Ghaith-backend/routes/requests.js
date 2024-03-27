@@ -12,10 +12,30 @@ router.get(
 
 router.get('/charityrequest', requestCtrl.findCharityRequest)
 
-router.post('/', requestCtrl.createRequest)
+router.post(
+  '/',
+  middleware.stripToken,
+  middleware.verifyToken,
+  requestCtrl.createRequest
+)
 
-router.put('/:requestId', requestCtrl.updateRequest)
-router.delete('/:requestId', requestCtrl.deleteRequest)
-router.post('/:requestId', requestCtrl.selectRequest)
+router.put(
+  '/:requestId',
+  middleware.stripToken,
+  middleware.verifyToken,
+  requestCtrl.updateRequest
+)
+router.delete(
+  '/:requestId',
+  middleware.stripToken,
+  middleware.verifyToken,
+  requestCtrl.deleteRequest
+)
+router.post(
+  '/:requestId',
+  middleware.stripToken,
+  middleware.verifyToken,
+  requestCtrl.selectRequest
+)
 
 module.exports = router

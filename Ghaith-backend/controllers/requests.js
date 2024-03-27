@@ -75,6 +75,9 @@ const generateCode = () => {
 const selectRequest = async (req, res) => {
   try {
     req.body.code = generateCode()
+    if (!req.body.image) {
+      req.body.image = ''
+    }
     const newCase = await Case.create(req.body)
 
     const selectedRequest = await Request.findById(req.params.requestId)
