@@ -73,7 +73,6 @@ const findUrgentCases = async (req, res) => {
         $limit: 3
       }
     ])
-
     res.send(urgentCases)
   } catch (error) {
     console.log(error)
