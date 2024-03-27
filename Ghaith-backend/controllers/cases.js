@@ -25,7 +25,9 @@ const findCase = async (req, res) => {
 
 const findCharityCases = async (req, res) => {
   try {
-    const cases = await Case.find({ charity: req.params.id })
+    const cases = await Case.find({ charity: req.params.id }).populate(
+      'category'
+    )
 
     // console.log('cases', cases)
     res.send(cases)
