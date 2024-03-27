@@ -42,11 +42,6 @@ const findUrgentCases = async (req, res) => {
 
     const urgentCases = await Case.aggregate([
       {
-        $match: {
-          total_amount: { $gt: 0, $gte: 1000 }
-        }
-      },
-      {
         $addFields: {
           required_collected_amount: { $multiply: ['$total_amount', 0.5] }
         }
@@ -55,23 +50,18 @@ const findUrgentCases = async (req, res) => {
         $match: {
           collected_amount: { $lt: '$required_collected_amount' }
         }
-      },
-      {
-        $sort: { total_amount: -1 }
-      },
-      {
-        $limit: 10
       }
     ])
 
-//     const urgentCases = await Case.find({
-//       start_date: { $lte: currentDate },
-//       end_date: { $gte: currentDate, $lte: twoDaysFromNow },
-//       total_amount: { $gt: 0, $gte: 1000 },
-//       collected_amount: { $lt: '$total_amount' * 0.5 }
-//     })
-//       .sort({ total_amount: -1 })
-//       .limit(10)
+    //     const urgentCases = await Case.find({
+    //       start_date: { $lte: currentDate },
+    //       end_date: { $gte: currentDate, $lte: twoDaysFromNow },
+    //       total_amount: { $gt: 0, $gte: 1000 },
+    //       collected_amount: { $lt: '$total_amount' * 0.5 }
+    //     })
+    //       .sort({ total_amount: -1 })
+    //       .limit(10)
+    console.log('urgent case ', urgentCases)
     res.send(urgentCases)
   } catch (error) {
     console.log(error)
