@@ -12,14 +12,24 @@ router.post(
   pickupCtrl.createPickupRequest
 )
 
-router.put('/:pickupId', pickupCtrl.updatePickupRequest)
+router.put(
+  '/:pickupId',
+  middleware.stripToken,
+  middleware.verifyToken,
+  pickupCtrl.updatePickupRequest
+)
 router.put(
   '/:pickupId/status',
 
   pickupCtrl.updatePickupStatus
 )
 
-router.delete('/:pickupId', pickupCtrl.deletePickupRequest)
+router.delete(
+  '/:pickupId',
+  middleware.stripToken,
+  middleware.verifyToken,
+  pickupCtrl.deletePickupRequest
+)
 
 router.get(
   '/charity',
