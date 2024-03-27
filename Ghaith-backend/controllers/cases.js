@@ -3,7 +3,7 @@ const { Case, Donation, Charity } = require('../models')
 
 const findAllCases = async (req, res) => {
   try {
-    const cases = await Case.find({})
+    const cases = await Case.find({}).populate('category')
 
     res.send(cases)
   } catch (error) {
@@ -73,6 +73,7 @@ const findUrgentCases = async (req, res) => {
         $limit: 3
       }
     ])
+
     res.send(urgentCases)
   } catch (error) {
     console.log(error)
