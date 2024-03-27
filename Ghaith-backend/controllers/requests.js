@@ -2,7 +2,20 @@ const { Request, Case, Charity } = require('../models')
 
 const findAllRequest = async (req, res) => {
   try {
-    const requests = await Request.find({})
+    console.log(res.locals.payload.charityId)
+    let requests = await Request.find({})
+    if (res.locals.payload.role === 'Admin') {
+      requests = await Request.aggregate([
+        {
+          $match: {
+            $or: [
+              { status: 'Not Selected' },
+              { charity: res.locals.payload.charityId }
+            ]
+          }
+        }
+      ])
+    }
     res.send(requests)
   } catch (error) {
     console.log(error)
