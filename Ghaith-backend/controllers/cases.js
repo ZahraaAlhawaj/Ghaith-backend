@@ -85,7 +85,6 @@ const findStatistics = async (req, res) => {
     const cases = await Case.findById(req.params.id).populate('donations')
     //find number of donation
     const numberOfDonations = cases.donations.length
-    // console.log('number: ', numberOfDonations)
 
     //find number of days until end day
     const formatDate = (dateString) => {
@@ -96,7 +95,7 @@ const findStatistics = async (req, res) => {
       const formattedDate = `${year}-${month}-${day}`
       return new Date(formattedDate)
     }
-    //const startDateOfDate = formatDate(cases.start_date)
+
     const endDateOfDate = formatDate(cases.end_date)
 
     const currentDate = new Date()
@@ -129,8 +128,6 @@ const findStatistics = async (req, res) => {
       const dayS = Math.floor(timeElapsed / 86400000)
       timeElapsedText = `${dayS} days`
     }
-
-    // console.log('time', timeElapsedText)
 
     res.send({
       timeElapsedText,

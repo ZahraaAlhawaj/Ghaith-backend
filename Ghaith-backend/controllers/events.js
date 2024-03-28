@@ -22,7 +22,7 @@ const createEvent = async (req, res) => {
   try {
     const userId = res.locals.payload.id
     const charity = await Charity.findOne({ user: userId })
-    console.log(charity._id)
+
     const event = await Event.create({ ...req.body, charity: charity._id })
     res.send(event)
   } catch (error) {
@@ -83,7 +83,7 @@ const getEventByCharity = async (req, res) => {
     const userId = res.locals.payload.id
     const charity = await Charity.findOne({ user: userId })
     const events = await Event.find({ charity: charity._id })
-    console.log(events, userId)
+
     res.send(events)
   } catch (error) {
     console.log(error)

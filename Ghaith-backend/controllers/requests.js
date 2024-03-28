@@ -2,7 +2,7 @@ const { Request, Case, Charity } = require('../models')
 
 const findAllRequest = async (req, res) => {
   try {
-    console.log(res.locals.payload.charityId)
+
     let requests = await Request.find({})
     if (res.locals.payload.role === 'Admin') {
       requests = await Request.aggregate([

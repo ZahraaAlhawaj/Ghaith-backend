@@ -42,7 +42,6 @@ const Register = async (req, res) => {
 
         // get charity location
         const mapCoords = getCoordinates(req.body.charity.googlemaplink)
-        console.log(mapCoords)
         if (mapCoords) {
           const location = {
             type: 'Point',
@@ -65,7 +64,6 @@ const Login = async (req, res) => {
   try {
     const { email, password } = req.body
     const user = await User.findOne({ email })
-    console.log('user', user)
 
     let matched = await middleware.comparePassword(
       user.passwordDigest,
@@ -137,11 +135,6 @@ const ResetPassword = async (req, res) => {
     res.status(500).send({ errorMsg: error.message })
   }
 }
-
-// // Example usage
-// const link = 'https://www.google.com/maps/@40.7128,-74.0060'
-// const coordinates = getCoordinatesFromGoogleMapsLink(link)
-// console.log(coordinates)
 
 module.exports = {
   Register,

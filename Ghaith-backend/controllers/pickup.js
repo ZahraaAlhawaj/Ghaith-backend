@@ -69,8 +69,8 @@ const getPickupsByCharity = async (req, res) => {
     const pickups = await Pickup.find({ charity: charityId })
       .populate('charity')
       .populate('user')
-    console.log(pickups)
-    res.send(pickups)
+
+      res.send(pickups)
   } catch (error) {
     console.log(error)
   }
